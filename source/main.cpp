@@ -91,22 +91,27 @@ void setupDebugMessenger(VkInstance instance) {
 }
 
 int main() {
-    Window window(800, 600, "Hello Vulkan");
-    VulkanDevice vulkanDevice(window.getGLFWwindow());
-    SwapChain swapChain(vulkanDevice, 800, 600);
-    Renderer renderer(vulkanDevice, swapChain);
+    try {
+        Window window(800, 600, "Hello Vulkan");
+        VulkanDevice vulkanDevice(window.getGLFWwindow());
+        SwapChain swapChain(vulkanDevice, 800, 600);
+        Renderer renderer(vulkanDevice, swapChain);
 
-    swapChain.init();
-    renderer.init();
+        swapChain.init();
+        renderer.init();
 
-    while (!window.shouldClose()) {
-        window.pollEvents();
-        renderer.drawFrame();
+        while (!window.shouldClose()) {
+            window.pollEvents();
+            renderer.drawFrame();
+        }
+
+        vkDeviceWaitIdle(vulkanDevice.getDevice());
+        renderer.cleanup();
+        swapChain.cleanup();
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
 
-    vkDeviceWaitIdle(vulkanDevice.getDevice());
-    renderer.cleanup();
-    swapChain.cleanup();
-
-    return 0;
+    return EXIT_SUCCESS;
 }

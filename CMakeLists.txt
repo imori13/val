@@ -12,10 +12,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # source/ 以下の全ソースファイルを収集
-file(GLOB_RECURSE SOURCES "include/*.h")
 file(GLOB_RECURSE HEADERS "include/core/*.h")
-file(GLOB_RECURSE SOURCES "source/*.cpp")
-file(GLOB_RECURSE SOURCES "source/core/*.cpp")
+file(GLOB_RECURSE SOURCES "source/*.cpp" "source/core/*.cpp")
 
 # 必要なライブラリを検索（vcpkg 経由の場合も自動設定される）
 find_package(glfw3 CONFIG REQUIRED)
